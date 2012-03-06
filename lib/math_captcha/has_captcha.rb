@@ -26,12 +26,14 @@ module MathCaptcha
         include InstanceMethods
         attr_accessor :captcha_solution
         dont_skip_captcha!
-        validates_presence_of :captcha_solution, 
-          :on => :create, :message => "can't be blank", 
+        validates :captcha_solution, 
+          :presence => true, :on => :create, :message => "can't be blank", 
           :unless => Proc.new {|record| record.skip_captcha? }
-        validate_on_create :must_solve_captcha,
+        validate :must_solve_captcha,
+          :on => :create, 
           :unless => Proc.new {|record| record.skip_captcha? }
       end
+      
       def skip_captcha!
         @@skip_captcha = true
       end

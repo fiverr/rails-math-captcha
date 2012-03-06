@@ -27,7 +27,7 @@ module MathCaptcha
         attr_accessor :captcha_solution
         dont_skip_captcha!
         validates :captcha_solution, 
-          :presence => true, :on => :create, :message => "can't be blank", 
+          :on => :create, :presence =>  {:message => "can't be blank"},
           :unless => Proc.new {|record| record.skip_captcha? }
         validate :must_solve_captcha,
           :on => :create, 
